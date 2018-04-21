@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>../../images/temperature.png</file>
+        <file>../../images/thumb-up.png</file>
+        <file>../../images/play-button.png</file>
+        <file>../../images/stop.png</file>
+        <file>../../images/left-arrow.png</file>
+        <file>../../images/round-pause-button.svg</file>
+    </qresource>
+</RCC>
