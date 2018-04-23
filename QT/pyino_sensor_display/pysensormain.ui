@@ -186,6 +186,13 @@
                </widget>
               </item>
               <item>
+               <widget class="QPushButton" name="pushButton_3">
+                <property name="text">
+                 <string>Clear log</string>
+                </property>
+               </widget>
+              </item>
+              <item>
                <spacer name="verticalSpacer_2">
                 <property name="orientation">
                  <enum>Qt::Vertical</enum>
@@ -202,31 +209,37 @@
                </spacer>
               </item>
               <item>
-               <widget class="QLCDNumber" name="lcdNumber">
+               <widget class="QFrame" name="frame_6">
                 <property name="sizePolicy">
-                 <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+                 <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
                   <horstretch>0</horstretch>
                   <verstretch>0</verstretch>
                  </sizepolicy>
                 </property>
-                <property name="smallDecimalPoint">
-                 <bool>true</bool>
+                <property name="frameShape">
+                 <enum>QFrame::StyledPanel</enum>
                 </property>
-                <property name="digitCount">
-                 <number>5</number>
+                <property name="frameShadow">
+                 <enum>QFrame::Raised</enum>
                 </property>
-                <property name="mode">
-                 <enum>QLCDNumber::Dec</enum>
-                </property>
-                <property name="segmentStyle">
-                 <enum>QLCDNumber::Flat</enum>
-                </property>
-                <property name="value" stdset="0">
-                 <double>43.000000000000000</double>
-                </property>
-                <property name="intValue" stdset="0">
-                 <number>43</number>
-                </property>
+                <layout class="QVBoxLayout" name="verticalLayout_3">
+                 <item>
+                  <widget class="QLabel" name="temp_display">
+                   <property name="font">
+                    <font>
+                     <family>MathJax_Typewriter</family>
+                     <pointsize>50</pointsize>
+                    </font>
+                   </property>
+                   <property name="text">
+                    <string>45.48°</string>
+                   </property>
+                   <property name="alignment">
+                    <set>Qt::AlignCenter</set>
+                   </property>
+                  </widget>
+                 </item>
+                </layout>
                </widget>
               </item>
               <item>
@@ -274,7 +287,7 @@
              </property>
              <layout class="QHBoxLayout" name="horizontalLayout_2">
               <item>
-               <widget class="QPushButton" name="pushButton_3">
+               <widget class="QPushButton" name="pause_button">
                 <property name="text">
                  <string/>
                 </property>
@@ -383,8 +396,8 @@
    <slot>change_stack_button()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>474</x>
-     <y>591</y>
+     <x>93</x>
+     <y>120</y>
     </hint>
     <hint type="destinationlabel">
      <x>2</x>
@@ -412,7 +425,7 @@
    <sender>play_button</sender>
    <signal>clicked()</signal>
    <receiver>MainWindow</receiver>
-   <slot>plot()</slot>
+   <slot>play_button_state()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>147</x>
@@ -424,9 +437,43 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>pause_button</sender>
+   <signal>clicked()</signal>
+   <receiver>MainWindow</receiver>
+   <slot>pause_button_state()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>59</x>
+     <y>634</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>6</x>
+     <y>634</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_3</sender>
+   <signal>clicked()</signal>
+   <receiver>listWidget</receiver>
+   <slot>clear()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>661</x>
+     <y>312</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>666</x>
+     <y>269</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>change_stack_button()</slot>
   <slot>plot()</slot>
+  <slot>play_button_state()</slot>
+  <slot>pause_button_state()</slot>
  </slots>
 </ui>
