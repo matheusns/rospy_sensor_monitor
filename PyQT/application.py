@@ -6,10 +6,8 @@ from pysensor import Ui_MainWindow as Py_Sensor_Ui # Importa todos os recursos g
 from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
-import random
-import datetime
-import numpy as np
 import matplotlib.pyplot as plt
+from time import gmtime, strftime
 
 current_temperature = 0
 time_sec = 0
@@ -28,9 +26,9 @@ class Application(QtGui.QMainWindow):
         self.ui = Py_Sensor_Ui()
         self.ui.setupUi(self)
         self.ui.stackedWidget.setCurrentIndex(0)
-        num = self.ui.stackedWidget.count()
         self.plot_setup()
-        print num
+        self.ui.output_log.addItem("OTIM started at " + strftime("%Y-%m-%d %H:%M:%S", gmtime()))
+        
 
     def plot_setup(self, toolbar = True):
         self.figure = Figure()
