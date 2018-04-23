@@ -1,3 +1,5 @@
+ #-*- coding: utf-8 -*-
+
 from PyQt4 import QtCore, QtGui
 import sys
 from pysensor import Ui_MainWindow as Py_Sensor_Ui # Importa todos os recursos graficos do QT
@@ -5,14 +7,18 @@ from matplotlib.backends.backend_qt4agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.backends.backend_qt4agg import NavigationToolbar2QT as NavigationToolbar
 from matplotlib.figure import Figure
 import random
+import datetime
+import numpy as np
+import matplotlib.pyplot as plt
 
 current_temperature = 0
+time_sec = 0
+x = []
+y = []
 
 def callback(sensor_temperature):
-    print "Here"
     global current_temperature
     current_temperature = sensor_temperature
-
 
 class Application(QtGui.QMainWindow):
 
@@ -26,14 +32,17 @@ class Application(QtGui.QMainWindow):
         self.plot_setup()
         print num
 
-    def plot_setup(self):
+    def plot_setup(self, toolbar = True):
         self.figure = Figure()
         self.canvas = FigureCanvas(self.figure)
-        self.toolbar = NavigationToolbar(self.canvas, self)
+        if toolbar:
+            self.toolbar = NavigationToolbar(self.canvas, self)
         layout = QtGui.QVBoxLayout(self.ui.matplot_frame)
-        layout.addWidget(self.toolbar)
+        if toolbar:
+            layout.addWidget(self.toolbar)
         layout.addWidget(self.canvas)
         self.setLayout(layout)
+        self.plot_graph = False
 
     def change_stack_button(self):
         if int( self.ui.stackedWidget.currentIndex() ) == 0:
@@ -41,18 +50,33 @@ class Application(QtGui.QMainWindow):
         else:
             self.ui.stackedWidget.setCurrentIndex(0)
 
+    def pause_button_state(self):
+        self.plot_graph = False
+        self.ui.pause_button.setEnabled(False)
+        self.ui.play_button.setEnabled(True)
+
+    def play_button_state(self):
+        self.plot_graph = True
+        self.ui.play_button.setEnabled(False)
+        self.ui.pause_button.setEnabled(True)
+
     def plot(self):
         global current_temperature 
-        print "Current_temperature = " + str(current_temperature)
-        # random data
-        current_temperature = int(current_temperature)
-        self.ui.lcdNumber.display(current_temperature)
-        data = [random.random() for i in range(10)]
-        # create an axis
-        ax = self.figure.add_subplot(111)
-        # discards the old graph
-        ax.clear()
-        # plot data
-        ax.plot(data, '*-')
-        # refresh canvas
-        self.canvas.draw()
+        global time_sec 
+        global x
+        global y
+
+        current_temperature_str = str(round(current_temperature.data,2))+u"°"
+        self.ui.temp_display.setText(current_temperature_str)
+        
+        time_sec = time_sec+1 
+        x.append(time_sec)
+        y.append(round(current_temperature.data,2)) 
+        
+        if (self.plot_graph):
+            ax = self.figure.add_subplot(111)
+            ax.clear()
+            ax.plot(x, y, color='green', alpha=0.5, linestyle='--', linewidth = 2.0)
+            ax.plot(x, y, 'go')
+            ax.grid(True)
+            self.canvas.draw()
