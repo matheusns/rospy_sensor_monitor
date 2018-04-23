@@ -16,7 +16,7 @@ class GuiThread(Thread):
         av = pyqt_application.Application()
         timer = QtCore.QTimer()  # set up your QTimer
         timer.timeout.connect(av.plot)  # connect it to your update function
-        timer.start(1)
+        timer.start(2000)
         av.show()
         sys.exit(app.exec_())
 
