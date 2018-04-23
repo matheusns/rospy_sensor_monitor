@@ -3,7 +3,6 @@ from threading import Thread
 import rospy
 from std_msgs.msg import Float32
 import sys
-from subprocess import call
 import application as pyqt_application
 
 
@@ -20,9 +19,6 @@ class GuiThread(Thread):
         av.show()
         sys.exit(app.exec_())
 
-def callback(data):
-    rospy.loginfo("I heard %s",data.data)
-                             
 if __name__ == '__main__':
    pyqt_thread = GuiThread()
    pyqt_thread.setName('QT_Thread')
